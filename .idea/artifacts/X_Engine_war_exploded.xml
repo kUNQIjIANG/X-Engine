@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="X-Engine:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/X_Engine_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="X-Engine" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="$PROJECT_DIR$/web/WEB-INF/lib" module-name="X-Engine" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="X-Engine/web/Web" />
+    </root>
+  </artifact>
+</component>
