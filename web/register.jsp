@@ -24,7 +24,7 @@
         %>
     </span>
     请输入用户名和密码：
-    <form id="register" method="post" action="register">
+    <form id="register" method="post" action="/servlet/RegisterServlet">
         用户名：<input type="text" name="userName" /><br/>
         密码&nbsp;<input type="password" name="password" /><br/>
         确认密码<input type="password" name="confirmPassword" /><br/>

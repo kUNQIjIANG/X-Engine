@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
         String pwd = request.getParameter("password");
 
         try{
-            sql = "Select pwd From Users where userName = ?";
+            sql = "Select pwd From Users where name = ?";
             ResultSet rs = MysqlDB.query(sql,userName);
             if(rs.next()){
                 if (rs.getString("pwd").equals(pwd)){

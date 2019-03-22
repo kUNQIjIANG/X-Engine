@@ -33,7 +33,7 @@ public class HomepageServlet extends HttpServlet {
 
                 NewsSearcher searcher = new NewsSearcher();
                 BooleanQuery booleanQuery = searcher.getAnalyzedQuery(query);
-                Document[] results = searcher.getSearchResult(booleanQuery,"/root/index/");
+                Document[] results = searcher.getSearchResult(booleanQuery,"/Users/kunqi/Desktop/ML/index");
 
                 if (results.length == 0){
                     request.setAttribute("noresult","没有找到相关内容");

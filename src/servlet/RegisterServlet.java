@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
                 ResultSet rs = MysqlDB.query(sql,userName);
                 if (rs.next()) errMsg = "用户名已经存在，请重设用户名";
                 else{
-                    sql = "Insert into Users values(?,?)";
+                    sql = "Insert into Users (name,pwd) values(?,?)";
                     boolean addUser = MysqlDB.insert(sql,userName,pwd);
                     if (!addUser) errMsg += "注册用户失败";
                     else{

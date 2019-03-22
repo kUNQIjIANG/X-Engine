@@ -25,11 +25,11 @@
         %>
     </span>
     请输入用户名和密码：
-    <form id="login" method="post" action="login">
+    <form id="login" method="post" action="/servlet/LoginServlet">
         用户名：<input type="text" name="userName" /><br/>
         密码&nbsp;<input type="password" name="password"/><br/>
         <input type="submit" value="登陆"/><br/>
     </form>
-    <a href="register.jsp">注册</a>
+    <a href="/register.jsp">注册</a>
 </body>
 </html>

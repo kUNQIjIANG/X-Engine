@@ -7,11 +7,11 @@ public class MysqlDB {
     private static String user;
     private static String pwd;
     static {
-        url = "jdbc:mysql://localhost:3306/usersDB";
+        url = "jdbc:mysql://localhost:3306/X_db";
         user = "root";
-        pwd = "66666666";
+        pwd = "666666";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -47,5 +47,13 @@ public class MysqlDB {
         if (conn != null) conn.close();
         if (pStmt != null) pStmt.close();
         if (rs != null) rs.close();
+    }
+
+    public static void main(String[] args) throws Exception{
+        String sql = "Select * From Users Where name = ?";
+        sql = "Insert into Users values(?,?,?)";
+        //ResultSet rs = query(sql,"x-man");
+        boolean addUser = insert(sql,"test","123");
+        System.out.println(addUser);
     }
 }
