@@ -15,6 +15,6 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h2>欢迎登陆，<%=request.getParameter("userName")%></h2>
+    <h2>欢迎登陆，<%=session.getAttribute("userName")%></h2>
 </body>
 </html>

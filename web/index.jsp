@@ -25,6 +25,19 @@
         <input style="width:450px;height:35px" type="text" name="query">
         <input style="width:70px;height:15px" type="submit" value="search">
       </form>
+      <a href="https://www.baidu.com" onclick="recordClick()" target="_blank">baidu</a>
     </div>
+    <script>
+      function recordClick() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200){
+
+          }
+        };
+        xhttp.open("GET","/servlet/RecordClickServlet",true);
+        xhttp.send();
+      }
+    </script>
   </body>
 </html>

@@ -6,6 +6,9 @@ public class MysqlDB {
     private static String url;
     private static String user;
     private static String pwd;
+    private static Connection conn;
+    private static PreparedStatement pstm;
+    private static ResultSet res;
     static {
         url = "jdbc:mysql://localhost:3306/X_db";
         user = "root";
@@ -23,30 +26,42 @@ public class MysqlDB {
 
     public static ResultSet query(String sql, String... args)
             throws SQLException{
-        Connection conn = getConn();
-        PreparedStatement pStmt = conn.prepareStatement(sql);
+        conn = getConn();
+        pstm = conn.prepareStatement(sql);
         for (int i = 1; i <= args.length; i++) {
-            pStmt.setString(i, args[i - 1]);
+            pstm.setString(i, args[i - 1]);
         }
-        return pStmt.executeQuery();
+        res = pstm.executeQuery();
+        return res;
     }
 
     public static boolean insert(String sql, String... args)
             throws SQLException{
-        Connection conn = getConn();
-        PreparedStatement pStmt = conn.prepareStatement(sql);
+        conn = getConn();
+        pstm = conn.prepareStatement(sql);
         for (int i = 1; i <= args.length; i++){
-            pStmt.setString(i,args[i-1]);
+            pstm.setString(i,args[i-1]);
         }
-        if (pStmt.executeUpdate() != 1) return false;
+        if (pstm.executeUpdate() != 1) return false;
         return true;
     }
 
-    public static void closeAll(Connection conn, PreparedStatement pStmt, ResultSet rs)
+    public static boolean insertClick(String sql, int uid, String userName, String url)
+            throws SQLException{
+        conn = getConn();
+        pstm = conn.prepareStatement(sql);
+        pstm.setInt(1,uid);
+        pstm.setString(2,userName);
+        pstm.setString(3,url);
+        if (pstm.executeUpdate() != 1) return false;
+        return true;
+    }
+
+    public static void closeAll()
         throws SQLException{
         if (conn != null) conn.close();
-        if (pStmt != null) pStmt.close();
-        if (rs != null) rs.close();
+        if (pstm != null) pstm.close();
+        if (res != null) res.close();
     }
 
     public static void main(String[] args) throws Exception{

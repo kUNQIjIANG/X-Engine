@@ -22,13 +22,16 @@ public class LoginServlet extends HttpServlet {
         String pwd = request.getParameter("password");
 
         try{
-            sql = "Select pwd From Users where name = ?";
+            sql = "Select id, pwd From Users where name = ?";
             ResultSet rs = MysqlDB.query(sql,userName);
             if(rs.next()){
                 if (rs.getString("pwd").equals(pwd)){
                     HttpSession session = request.getSession(true);
                     session.setAttribute("userName",userName);
-                    RequestDispatcher rd = request.getRequestDispatcher("/welcome.jsp");
+                    int uid = rs.getInt("id");
+                    session.setAttribute("uid",uid);
+                    MysqlDB.closeAll();
+                    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request,response);
                 } else errMsg += "您的用户密码错误，请重新输入";
             }else errMsg += "您的用户名不存在，请先注册";

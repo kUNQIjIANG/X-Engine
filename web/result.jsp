@@ -12,9 +12,9 @@
 <div id="container">
 	<div id="hd" class="ue-clear">
     	<div class="logo"></div>
-    	<form action = "loginAction.do">
+    	<form action = "/servlet/HomepageServlet",method = "GET">
         <div class="inputArea">
-        	<input type="text" class="searchInput" name="inputMessage" />
+        	<input type="text" class="searchInput" name="query" />
             <input type="submit" class="searchButton" />
         </div>
         </form>
@@ -37,7 +37,7 @@
                     	out.println("<div class=\"resultItem\">");
                     	
                     	out.println("<div class=\"itemHead\">");
-                    	out.println("<a href=\""+request.getAttribute("newsUrl"+i)+"\""+"  target=\"_blank\" class=\"title\">");
+                    	out.println("<a id=\"link\" href=\""+request.getAttribute("newsUrl"+i)+"\""+"  onClick=\"recordClick()\" target=\"_blank\" class=\"title\">");
                     	//out.println("<span class=\"keyWord\">");
                     	out.println(request.getAttribute("newsTitle"+i));
                     	out.println("<br>");
@@ -80,9 +80,27 @@
 </div>
 
 <div id="foot">Copyright &copy;X-ENGINE 版权所有  E-mail:X-Engine@aliyun.com</div>
-</body>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/global.js"></script>
 <script type="text/javascript" src="js/pagination.js"></script>
+<script>
+function recordClick() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+
+		}
+	};
+	var url = document.getElementById("link").href;
+	console.log(url);
+	//Session s = request.getSession();
+	//var userName = session.getAttribute("userName");
+	//var uid = session.getAttribute("uid");
+    xhttp.open("POST","/servlet/RecordClickServlet",true);
+    xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');//post 传值必写
+	xhttp.send("url="+url);
+}
+</script>
+</body>
 
 </html>

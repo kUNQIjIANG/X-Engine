@@ -27,7 +27,7 @@ public class HomepageServlet extends HttpServlet {
         try{
             String query = request.getParameter("query");
             if(query == null || query.trim().length() == 0){
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("/index.jsp");
             }else{
                 long startTime = System.currentTimeMillis();
 

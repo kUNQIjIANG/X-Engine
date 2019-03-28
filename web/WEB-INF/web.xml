@@ -32,4 +32,14 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/servlet/LoginServlet</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>RecordClickServlet</servlet-name>
+        <servlet-class>servlet.RecordClickServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>RecordClickServlet</servlet-name>
+        <url-pattern>/servlet/RecordClickServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
