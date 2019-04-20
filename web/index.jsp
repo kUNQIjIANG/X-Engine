@@ -25,7 +25,23 @@
         <input style="width:450px;height:35px" type="text" name="query">
         <input style="width:70px;height:15px" type="submit" value="search">
       </form>
-      <a href="https://www.baidu.com" onclick="recordClick()" target="_blank">baidu</a>
+      <form action="/servlet/FeedServlet" method="GET">
+        <input style="width:450px;height:35px" type="text" name="statue">
+        <input style="width:70px;height:15px" type="submit" value="post">
+      </form>
+      <!--a href="https://www.baidu.com" onclick="recordClick()" target="_blank">baidu</a-->
+    </div>
+    <div class="feeds">
+      <h1>新动态</h1>
+      <ul>
+        <%
+          for(int i = 0; i < Integer.parseInt(request.getAttribute("feedNum").toString());i++){
+            int user_id = Integer.parseInt(request.getAttribute("statue_user"+i).toString());
+            String statue = request.getAttribute("statue"+i).toString();
+            out.println("<li>"+user_id+" statue: "+statue+"</li>");
+          }
+        %>
+      </ul>
     </div>
     <script>
       function recordClick() {

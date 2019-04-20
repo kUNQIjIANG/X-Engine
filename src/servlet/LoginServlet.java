@@ -15,6 +15,22 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LoginServlet extends HttpServlet {
+
+    public ResultSet getStatueFeed(int event_id){
+        try {
+            String sql = "select table_name, record_id from events where event_id = ?";
+            ResultSet rs = MysqlDB.queryEvent(sql, event_id);
+            String table_name = rs.getString("table_name");
+            int record_id = rs.getInt("record_id");
+            sql = "select user_id, statue from ? where id = ?";
+            rs = MysqlDB.queryStatue(sql, table_name, record_id);
+            return rs;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void service(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException{
 
@@ -38,19 +54,29 @@ public class LoginServlet extends HttpServlet {
                     String key = "follower_id_" + user_id;
                     if(jedis.exists(key)){
                         List<String> list = jedis.lrange(key,0,10);
+                        session.setAttribute("feedNum", list.size());
                         for(int i = 0; i < list.size(); i++){
                             int event_id = Integer.parseInt(list.get(i));
-                            sql = "select table_name, record_id from events where event_id = ?";
-                            rs = MysqlDB.queryEvent(sql,event_id);
-                            String table_name = rs.getString("table_name");
-                            int record_id = rs.getInt("record_id");
-                            sql = "select user_id, statue from ? where id = ?";
-                            rs = MysqlDB.queryStatue(sql,table_name,record_id);
+                            rs = getStatueFeed(event_id);
                             String statue_user = rs.getString("user_id");
                             String statue = rs.getString("statue");
+                            session.setAttribute("statue_user"+i,statue_user);
+                            session.setAttribute("statue"+i,statue);
+                        }
+                    }else{
+                        sql = "select event_id from follow_feeds where user_id = ? order by event_id DESC limit 10";
+                        rs = MysqlDB.queryEventId(sql,user_id);
+                        int i = 0;
+                        while(rs.next()){
+                            int event_id = rs.getInt("event_id");
+                            rs = getStatueFeed(event_id);
+                            String statue_user = rs.getString("user_id");
+                            String statue = rs.getString("statue");
+                            session.setAttribute("statue_user"+i,statue_user);
+                            session.setAttribute("statue"+i,statue);
+                            i++;
                         }
                     }
-
 
                     RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request,response);

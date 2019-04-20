@@ -43,6 +43,16 @@ public class MysqlDB {
         return res;
     }
 
+    //redis 没有queue, 去follow_feeds里拉
+    public static ResultSet queryEventId(String sql, int user_id)
+            throws SQLException{
+        pstm = conn.prepareStatement(sql);
+        pstm.setInt(1,user_id);
+        res = pstm.executeQuery();
+        return res;
+    }
+
+
     public static ResultSet queryStatue(String sql, String table_name, int record_id)
             throws SQLException{
         pstm = conn.prepareStatement(sql);
