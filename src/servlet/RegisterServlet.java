@@ -28,17 +28,17 @@ public class RegisterServlet extends HttpServlet {
         else if (!confPwd.equals(pwd)) errMsg += "注册失败，确认密码不一致";
         else {
             try{
-                sql = "Select * From Users Where name = ?";
+                sql = "Select * From users Where name = ?";
                 ResultSet rs = MysqlDB.query(sql,userName);
                 if (rs.next()) errMsg = "用户名已经存在，请重设用户名";
                 else{
-                    sql = "Insert into Users (name,pwd) values(?,?)";
+                    sql = "Insert into users (name,password) values(?,?)";
                     boolean addUser = MysqlDB.insert(sql,userName,pwd);
                     if (!addUser) errMsg += "注册用户失败";
                     else{
                         HttpSession session = request.getSession(true);
                         session.setAttribute("userName",userName);
-                        RequestDispatcher rd = request.getRequestDispatcher("/welcome.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
                         rd.forward(request,response);
                     }
                 }

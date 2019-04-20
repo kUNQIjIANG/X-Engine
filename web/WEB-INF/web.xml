@@ -42,4 +42,14 @@
         <servlet-name>RecordClickServlet</servlet-name>
         <url-pattern>/servlet/RecordClickServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FeedServlet</servlet-name>
+        <servlet-class>servlet.FeedServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FeedServlet</servlet-name>
+        <url-pattern>/servlet/FeedServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

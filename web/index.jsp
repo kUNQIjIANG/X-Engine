@@ -16,6 +16,12 @@
         left: 45%;
         transform: translate(-30%,-50%);
       }
+      .feeds{
+        position: fixed;
+        top: 60%;
+        left: 45%;
+        transform: translate(-30%,-50%);
+      }
     </Style>
   </head>
   <body>
@@ -32,13 +38,17 @@
       <!--a href="https://www.baidu.com" onclick="recordClick()" target="_blank">baidu</a-->
     </div>
     <div class="feeds">
-      <h1>新动态</h1>
+      <p>新动态</p>
       <ul>
         <%
-          for(int i = 0; i < Integer.parseInt(request.getAttribute("feedNum").toString());i++){
-            int user_id = Integer.parseInt(request.getAttribute("statue_user"+i).toString());
-            String statue = request.getAttribute("statue"+i).toString();
-            out.println("<li>"+user_id+" statue: "+statue+"</li>");
+          if(request.getAttribute("feedNum") != null) {
+            for (int i = 0; i < Integer.parseInt(request.getAttribute("feedNum").toString()); i++) {
+              int user_id = Integer.parseInt(request.getAttribute("statue_user" + i).toString());
+              String statue = request.getAttribute("statue" + i).toString();
+              out.println("<li> statue: " + statue + " from user_" + user_id + "</li>");
+            }
+          }else{
+            out.println("<li> no statue </li?");
           }
         %>
       </ul>

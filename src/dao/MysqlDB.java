@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.util.Enumeration;
 
 public class MysqlDB {
     private static String url;
@@ -12,7 +13,7 @@ public class MysqlDB {
     static {
         url = "jdbc:mysql://localhost:3306/feeds";
         user = "root";
-        pwd = "666666";
+        pwd = "666";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url,user,pwd);
@@ -53,11 +54,10 @@ public class MysqlDB {
     }
 
 
-    public static ResultSet queryStatue(String sql, String table_name, int record_id)
+    public static ResultSet queryStatue(String sql, int record_id)
             throws SQLException{
         pstm = conn.prepareStatement(sql);
-        pstm.setString(1,table_name);
-        pstm.setInt(2,record_id);
+        pstm.setInt(1,record_id);
         res = pstm.executeQuery();
         return res;
     }
@@ -103,6 +103,15 @@ public class MysqlDB {
         return true;
     }
 
+    public static boolean insertFollowFeed(String sql, int user_id, int event_id)
+            throws SQLException{
+        pstm = conn.prepareStatement(sql);
+        pstm.setInt(1,user_id);
+        pstm.setInt(2,event_id);
+        if (pstm.executeUpdate() != 1) return false;
+        return true;
+    }
+
     public static boolean insertEvent(String sql, int user_id, String operation, String table_name, int record_id, String type)
             throws SQLException{
         pstm = conn.prepareStatement(sql);
@@ -121,15 +130,31 @@ public class MysqlDB {
         if (conn != null) conn.close();
         if (pstm != null) pstm.close();
         if (res != null) res.close();
+        /**
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
+            try {
+                DriverManager.deregisterDriver(driver);
+                //LOG.log(Level.INFO, String.format("deregistering jdbc driver: %s", driver));
+            } catch (SQLException e) {
+                //LOG.log(Level.SEVERE, String.format("Error deregistering driver %s", driver), e);
+            }
+        }
+         */
     }
 
     public static void main(String[] args) throws Exception{
         String sql = "Select * From Users Where name = ?";
-        sql = "select friend_id from friends where user_id = ? and is_faked = 0 and is_blocked = 0";
-        ResultSet rs = MysqlDB.queryFriends(sql,1);
-        while(rs.next()) System.out.println(rs.getInt("friend_id"));
+        //sql = "select friend_id from friends where user_id = ? and is_faked = 0 and is_blocked = 0";
+        //ResultSet rs = MysqlDB.queryFriends(sql,1);
+        //while(rs.next()) System.out.println(rs.getInt("friend_id"));
         //ResultSet rs = query(sql,"x-man");
         //boolean addUser = insert(sql,"test","123");
         //System.out.println(addUser);
+        sql = "select id from statues order by id desc limit 2";
+        ResultSet rs = MysqlDB.query(sql);
+        rs.first();
+        System.out.println(rs.getInt("id"));
     }
 }
